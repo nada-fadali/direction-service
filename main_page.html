@@ -13,14 +13,14 @@
 
 		<!-- google maps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script type="javascript">
+		<script type="text/javascript">
 			var map;
 			function initialize() {
   				var mapOptions = {
     				zoom: 8,
     				center: new google.maps.LatLng(-34.397, 150.644)
   				};
- 		 		map = new google.maps.Map(document.getElementById('map-canvas'),
+ 		 		map = new google.maps.Map(document.getElementById('map'),
       				mapOptions);
 			}
 
@@ -30,13 +30,13 @@
 	</head>
 	
 	<body>
-		<div id="map-canvas"></div>
 		<div id="header">
 			You Shall Have Directions
 			<div id="nav"></div>
 		</div>
 
 		<div id="container">
+			<div id="map"></div>
 			
 		</div>
 	</body>	
