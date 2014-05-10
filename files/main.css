@@ -8,6 +8,15 @@
 	src: url('YanoneKaffeesatz-Light.ttf');
 }
 
+ 
+::selection {background-color: #EEEEEE;}
+::-moz-selection {background-color: #EEEEEE;}
+::-webkit-selection {background-color: #EEEEEE;}
+
+
+::-webkit-scrollbar-thumb:vertical {background-color:#98D4AF;height: 50px;}
+::-webkit-scrollbar {height: 10px;width: 5px;background-color: #8DC2A1;}
+
 body{
 	background-image: url("bg.png");
 	width: 100%;
@@ -78,6 +87,6 @@ a:hover{
 #container{
 	width: 800px;
 	background-color: #FEFEFE;
-	padding: 80px 5px 20px 5px;
+	padding: 80px 7px 20px 7px;
 	margin: -60px 0 0 20%;
 }
