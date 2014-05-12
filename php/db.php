@@ -23,7 +23,7 @@
 		");
 
 		//insert into tables
-		//street name, start(lat, lng), end(lat, lng)
+		//street name, start(lat lng), end(lat lng)
 		mysql_query("
 			INSERT INTO Streets(name, start, end) 
 			VALUES
@@ -86,7 +86,7 @@
 	
 	mysql_close($con);
 
-
+	
 
 
 
