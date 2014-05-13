@@ -65,7 +65,7 @@ a:hover{
 	background-color: #8DC2A1;
 	text-align: center;
 	font-size: 14px;
-	padding: 10px 28px 10px 0;
+	padding: 10px 23px 10px 0;
 	z-index: 9999;
 	
 }
@@ -77,11 +77,14 @@ a:hover{
 	margin-left: 10px;
 	font-weight: normal;
 	text-decoration: none;
+	padding: 5px;
+	border-radius: 7px;
 }
 #nav a:hover{
 	background-color: #8DC2A1;
 	color: #FEFEFE;
 	text-decoration: underline;
+	border-radius: 0px;
 }
 
 #container{

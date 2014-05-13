@@ -30,10 +30,22 @@
             $(document).ready(function(){
                 //create database of the streets
                 $.ajax({
-                    url: 'php/db.php'
-                    //success: function(data){
-                       //alert(data);
-                    //}
+                    url: 'php/db.php',
+                    type: 'post',
+                    dataType: 'html',
+                    success: function(data){
+                       if(data == "error"){ //in case db already exist, user enters a valid name
+                            $.ajax({
+                                url: 'php/db.php',
+                                type: 'post',
+                                data: {'dbname' : prompt("Enter A Valid Database Name")},
+                                //dataType: 'html',
+                                /*success: function(data){
+                                    alert(data);
+                                }*/
+                            });
+                       }
+                    }
                 });
 
 

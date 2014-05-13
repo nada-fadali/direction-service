@@ -5,25 +5,114 @@
 	if(mysql_errno())
 		echo "error";
 	
+	if (isset($_POST['dbname'])) {
+		$dbname = $_POST['dbname'];
+	} else
+		$dbname = 'dmetprojdb';
+
 	//create database if it doesn't exist
-	if(mysql_query("CREATE DATABASE dmetprojdb")){
-		mysql_select_db("dmetprojdb", $con);
+	if(mysql_query("CREATE DATABASE " . $dbname)){
+		mysql_select_db($dbname, $con);
 
 		//create tables
-		mysql_query("
-			CREATE TABLE Streets(
-			name VARCHAR(20) PRIMARY KEY, 
-			start VARCHAR(20), end VARCHAR(20))
-		");
 		mysql_query("
 			CREATE TABLE Nodes(
 				no INTEGER PRIMARY KEY, 
 				lat VARCHAR(20), 
-				lng VARCHAR(20))
+				lng VARCHAR(20)
+			)
+		");
+		mysql_query("
+			CREATE TABLE Nodes_Streets(
+				first_node INTEGER,
+				second_node INTEGER,
+				street VARCHAR(20),
+				PRIMARY KEY (first_node, second_node, street)
+			)
 		");
 
 		//insert into tables
-		//street name, start(lat lng), end(lat lng)
+		mysql_query("
+			INSERT INTO Nodes(no, lng, lat)
+			VALUES
+				(1, '30.0900757688', '31.3487148284'),
+				(2, '30.0804581136', '31.3589715957'),
+				(3, '30.0953483720', '31.3422775268'),
+				(4, '30.0887018753', '31.33038997650'),
+				(5, '30.0807180625', '31.3167858123'),
+				(6, '30.0779699964', '31.3130092620'),
+				(7, '30.05561127153', '31.2798357009'),
+				(8, '30.0838002620', '31.340517997'),
+				(9, '30.08004962107', '31.36180400848'),
+				(10, '30.07150802687', '31.35433673858'),
+				(11, '30.06946536249', '31.3440370559'),
+				(12, '30.068871124', '31.33841514587'),
+				(13, '30.06853686474', '31.33618354797'),
+				(14, '30.0673855154', '31.32489681243'),
+				(15, '30.06682840612', '31.31996154785'),
+				(16, '30.0612199977', '31.30811691284'),
+				(17, '30.05067087207', '31.31193637847'),
+				(18, '30.0508566058', '31.320562362'),
+				(19, '30.05278821631', '31.32489681243'),
+				(20, '30.05275107031', '31.32712841033'),
+				(21, '30.05379115304', '31.3384580612'),
+				(22, '30.05464549854', '31.34613990783'),
+				(23, '30.0559084305', '31.35734081268'),
+				(24, '30.05824852673', '31.38000011444'),
+				(25, '30.04899925254', '31.378970146'),
+				(26, '30.04658464119', '31.3562679290'),
+				(27, '30.04483865477', '31.3397884368'),
+				(28, '30.04335268464', '31.32682800292'),
+				(29, '30.02585371012', '31.35382175445')
+		");
+
+		mysql_query("
+			INSERT INTO Nodes_Streets(first_node, second_node, street)
+			VALUES
+				(1, 2, 'Hassen Kamel'),
+				(2, 9, 'Suez Road'),
+				(2, 8, 'Suez Road'),
+				(3, 4, 'El Orooba'),
+				(3, 8, 'El Nozha'),
+				(4, 8, 'Suez Road'),
+				(4, 5, 'Salah Salem'),
+				(5, 6, 'Salah Salem'),
+				(5, 14, 'El Tayaraan'),
+				(6, 7, 'Salah Salem'),
+				(6, 15, 'Yussef Abbas'),
+				(8, 12, 'El Nozha'),
+				(9, 10, 'Nasr Road'),
+				(10, 11, 'Nasr Road'),
+				(10, 23, 'Hassan El Maamoon'),
+				(11, 12, 'Nasr Road'),
+				(11, 22, 'Makram Abed')
+
+		");
+	}
+	//UNCOMMENT THIS
+	//else
+		//echo 'error';	
+
+	
+	mysql_close($con);
+
+	
+
+
+
+	/*
+	//relation
+	INSERT INTO Nodes_Streets(first_node, second_node, street)
+	
+
+
+	mysql_query("
+			CREATE TABLE Streets(
+			name VARCHAR(20) PRIMARY KEY, 
+			start VARCHAR(20), end VARCHAR(20))
+		");
+
+	//street name, start(lat lng), end(lat lng)
 		mysql_query("
 			INSERT INTO Streets(name, start, end) 
 			VALUES
@@ -48,71 +137,6 @@
 				('Ahmed EL Zomor', '30.044727 31.339874', '30.048962 31.378927'),
 				('El Waffaa w EL Amaal', '30.046510 31.356353', '30.036182 31.354894')
 		");
-
-		mysql_query("
-			INSERT INTO Nodes(no, lng, lat)
-			VALUES
-				(1, '30.090112', '31.348543'),
-				(2, '30.080235', '31.359272'),
-				(3, '30.095311', '31.342020'),
-				(4, '30.088776', '31.330175'),
-				(5, '30.080978', '31.316528'),
-				(6, '30.077932', '31.313009'),
-				(7, '30.073922', '31.301851'),
-				(8, '30.083874', '31.340475'),
-				(9, '30.080161', '31.361761'),
-				(10, '30.071545', '31.354465'),
-				(11, '30.069465', '31.344079'),
-				(12, '30.068871', '31.338500'),
-				(13, '30.068648', '31.336183'),
-				(14, '30.067459', '31.324939'),
-				(15, '30.066865', '31.319961'),
-				(16, '30.061368', '31.308202'),
-				(17, '30.050596', '31.311979'),
-				(18, '30.050968', '31.320476'),
-				(19, '30.052602', '31.324853'),
-				(20, '30.052676', '31.327085'),
-				(21, '30.053939', '31.338500'),
-				(22, '30.054756', '31.346054'),
-				(23, '30.055945', '31.357383'),
-				(24, '30.058397', '31.379957'),
-				(25, '30.049110', '31.378841'),
-				(26, '30.046658', '31.356267'),
-				(27, '30.044801', '31.339702'),
-				(28, '30.043464', '31.326828'),
-				(29, '30.035811', '31.354894')
-		");
-	}	
-	
-	mysql_close($con);
-
-	
-
-
-
-	/*
-	//relation
-	INSERT INTO Nodes_Streets(node, street)
-	(1, 'Hassen Kamel'),
-	(2, 'Hassen Kamel'),
-	(2, 'Suez Road'),
-	(3, 'El Orooba'),
-	(3, 'El Nozha'),
-	(4, 'El Orooba'),
-	(4, 'Suez Road'),
-	(4, 'Salah Salem'),
-	(5, 'Salah Salem'),
-	(5, 'El Tayaraan'),
-	(6, 'Salah Salem'),
-	(6, 'Yussef Abbas'),
-	(7, 'Salah Salem'),
-	(8, 'El Nozha'),
-	(8, 'Suez Road'),
-	(9, 'Nasr Road'),
-	(9, 'Suez Road'),
-	(10, 'Nasr Road'),
-	(10, 'Hassan El Maamoon'),
-	(11, 'Nasr Road'),
-	(11, 'Makram Abed'),*/
+	*/
 
 ?>
