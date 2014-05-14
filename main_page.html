@@ -16,7 +16,13 @@
             input{
                 color: #FFF;
                 background-color: #8DC2A1;
-                letter-spacing: 2px;
+                border:1px solid #658A73;
+                -moz-box-shadow: inset 0 0 5px #769B84;
+                -webkit-box-shadow: inset 0 0 5px #769B84;
+                box-shadow: inset 0 0 5px #769B84;
+            }
+            input:hover {
+                background-color: #82AD92;
             }
         </style>
 
@@ -73,20 +79,39 @@
             <p>&nabla; Please Click on the two locations</p>
 			
 			<div id="map"></div>
+
+            <div style="float:right;">
+                <input id="btnClearPt1" type="button" value="Clear Point 1" 
+                onclick="clearPt(1);" style="font-size:11px;" >
+
+                <input id="btnCLearpt2" type="button" value="Clear Point 2" 
+                onclick="clearPt(0);" style="font-size:11px;">
+            </div>
+
             <input id="btn" type="button" value="Show Directions">
 		</div>
 	</body>	
 
 
-    <!-- google maps api -->
+    <!-- 
+        google maps api 
+    -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript">
         var map;
-        var counter = 0;
+
+        //flags to render markers
+        var f1 = true;
+        var f2 = true;
+
+        //markers 
         var pt1 = new google.maps.Marker({title:'Point 1'});
-        var pt2 = new google.maps.Marker({title:'Point 2'});
+        var pt2 = new google.maps.Marker({title:'Point 2', icon: 'css/blue-icon.png'});
 
         function initialize() {
+            /*
+            *   Map intialization
+            */
             var mapOptions = {
                 zoom: 14,
                 center: new google.maps.LatLng(30.057543,31.329868)
@@ -94,18 +119,22 @@
             map = new google.maps.Map(document.getElementById('map'),
                 mapOptions);
 
+            /*
+            *   Click event
+            */
             google.maps.event.addListener(map, 'click', function(event){
-                if (counter > 2) {
+                if (!f1 && !f2) {
                     alert("Only two locations!");
                 } 
                 else {
-                     counter++;
-                    if (counter == 1) {
+                    if (f1) {
+                        f1 = false;
                         pt1.setMap(map);
                         pt1.setPosition(event.latLng);
                     }
                        
-                    if (counter == 2){
+                    else if (f2){
+                        f2 = false;  
                         pt2.setMap(map);
                         pt2.setPosition(event.latLng);
                     } 
@@ -114,16 +143,22 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-
+        
+        /*
+        * create database of the nodes
+        */
         $(document).ready(function(){
-            //create database of the streets
             $.ajax({
                 url: 'php/db.php'
             });
         });
 
+        /*
+        *   click event
+        *   takes input points and return shortest path
+        */
         $('#btn').click(function(){
-            if (counter == 0 || counter == 1) {
+            if (f1 || f2) {
                 alert("Please Choose two locations!")
             }  
             else{ 
@@ -143,5 +178,20 @@
                 });
             }
         });
+        
+        /*
+        * Clear points on the map
+        */
+        function clearPt(i){
+            if (i == 1) {
+                pt1.setMap(null);  
+                f1 = true; 
+            }
+            else {
+                pt2.setMap(null);
+                f2 = true;
+            }
+        }
+
     </script>
 </html>

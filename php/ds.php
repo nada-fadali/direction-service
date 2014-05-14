@@ -1,6 +1,6 @@
 <?php
 	
-	
+
 
 	//calculates distance between two points
 	function distance($lat1, $lon1, $lat2, $lon2) {
@@ -24,4 +24,7 @@
 	//since all streets are two ways
 	//because -you know, because Egypt om el donia~
 	$graph = new Graph();
+
+	//initialize graph from db
+	//get query from db and create the nodes and the edges
 ?>
