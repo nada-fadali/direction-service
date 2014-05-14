@@ -82,7 +82,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript">
         var map;
-        var counter = 1;
+        var counter = 0;
         var pt1 = new google.maps.Marker({title:'Point 1'});
         var pt2 = new google.maps.Marker({title:'Point 2'});
 
@@ -99,6 +99,7 @@
                     alert("Only two locations!");
                 } 
                 else {
+                     counter++;
                     if (counter == 1) {
                         pt1.setMap(map);
                         pt1.setPosition(event.latLng);
@@ -107,9 +108,7 @@
                     if (counter == 2){
                         pt2.setMap(map);
                         pt2.setPosition(event.latLng);
-                    }
-                        
-                    counter++;
+                    } 
                 }
             });
         }
@@ -124,20 +123,25 @@
         });
 
         $('#btn').click(function(){
-            $.ajax({
-                url:'php/ds.php',
-                type:'post',
-                dataType:'html',
-                data:{
-                    lat1:pt1.getPosition().lat()+'', 
-                    lng1:pt1.getPosition().lng()+'',
-                    lat2:pt2.getPosition().lat()+'',
-                    lng2:pt2.getPosition().lng()+''
-                },
-                success:function(data){
-                    alert(data);
-                }
-            });
+            if (counter == 0 || counter == 1) {
+                alert("Please Choose two locations!")
+            }  
+            else{ 
+                $.ajax({
+                    url:'php/ds.php',
+                    type:'post',
+                    dataType:'html',
+                    data:{
+                        lat1:pt1.getPosition().lat()+'', 
+                        lng1:pt1.getPosition().lng()+'',
+                        lat2:pt2.getPosition().lat()+'',
+                        lng2:pt2.getPosition().lng()+''
+                    },
+                    success:function(data){
+                        alert(data);
+                    }
+                });
+            }
         });
     </script>
 </html>

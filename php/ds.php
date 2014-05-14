@@ -1,8 +1,7 @@
 <?php
 	
-	if ($_POST['lat1']) {
-		
-	}
+	
+
 	//calculates distance between two points
 	function distance($lat1, $lon1, $lat2, $lon2) {
 		$theta = $lon1 - $lon2;
