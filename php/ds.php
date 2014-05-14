@@ -1,4 +1,8 @@
 <?php
+	
+	if ($_POST['lat1']) {
+		
+	}
 	//calculates distance between two points
 	function distance($lat1, $lon1, $lat2, $lon2) {
 		$theta = $lon1 - $lon2;
@@ -12,9 +16,9 @@
 	}
 
 	//create graph
-	require_once 'php/Graph/Graph.php';
-	require_once 'php/Graph/Vertex.php';
-	require_once 'php/Graph/Algorithm/Dijkstra.php';
+	require_once 'Graph/Graph.php';
+	require_once 'Graph/Vertex.php';
+	require_once 'Graph/Dijkstra.php';
 
 	//This graph is undirected
 	//but weighted

@@ -7,51 +7,22 @@
         <meta name="author" content="Nada Fadali">
 
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
+        <style type="text/css">
+            #map{
+                height: 400px; 
+                margin-bottom:20px;
+            }
+
+            input{
+                color: #FFF;
+                background-color: #8DC2A1;
+                letter-spacing: 2px;
+            }
+        </style>
 
 		<!-- JQuery && navigator bar animation script -->
 		<script src='js/jquery-2.1.1.min.js'></script>
 		<script src='js/nav.js'></script>
-
-		<!-- google maps api -->
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script type="text/javascript">
-			var map;
-			function initialize() {
-  				var mapOptions = {
-                    zoom: 14,
-                    center: new google.maps.LatLng(30.057543,31.329868)
-                };
-                map = new google.maps.Map(document.getElementById('map'),
-                    mapOptions);
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
-
-            $(document).ready(function(){
-                //create database of the streets
-                $.ajax({
-                    url: 'php/db.php',
-                    type: 'post',
-                    dataType: 'html',
-                    success: function(data){
-                       if(data == "error"){ //in case db already exist, user enters a valid name
-                            $.ajax({
-                                url: 'php/db.php',
-                                type: 'post',
-                                data: {'dbname' : prompt("Enter A Valid Database Name")},
-                                //dataType: 'html',
-                                /*success: function(data){
-                                    alert(data);
-                                }*/
-                            });
-                       }
-                    }
-                });
-
-
-                //start direction service
-            });
-   	 	</script>
 
 	</head>
 	
@@ -66,7 +37,7 @@
 		</div>
 
 		<div id="container">
-			<center>Nada's Navigator</center>
+			<center><big><b>Nada's Navigator</b></big></center>
             <p>
                 Hello, my name is <b>Nada</b> and this is my project for DMET601 Web Technologies and Utitlties course at the German University in Cairo. It's a direction service that shows on the map the shortest driving route between two streets.
             </p>
@@ -74,7 +45,7 @@
                 Bellow is a <a href="main_page.html#map">map</a>centered on <b>Nasr City</b>. You may click on the two streets you wish to view the shortest driving route between them (two streets must be from the list of the available streets).
             </p>
             <p>
-                The streets available are
+                &nabla; The streets available are
                 <ul>
                     <li>Hassen Kamel</li>
                     <li>El Orooba</li>
@@ -98,9 +69,75 @@
                     <li>El Waffaa w EL Amaal</li>
                 </ul>
             </p>
+
+            <p>&nabla; Please Click on the two locations</p>
 			
-			<div id="map" style="height: 400px;"></div>
-			
+			<div id="map"></div>
+            <input id="btn" type="button" value="Show Directions">
 		</div>
 	</body>	
+
+
+    <!-- google maps api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript">
+        var map;
+        var counter = 1;
+        var pt1 = new google.maps.Marker({title:'Point 1'});
+        var pt2 = new google.maps.Marker({title:'Point 2'});
+
+        function initialize() {
+            var mapOptions = {
+                zoom: 14,
+                center: new google.maps.LatLng(30.057543,31.329868)
+            };
+            map = new google.maps.Map(document.getElementById('map'),
+                mapOptions);
+
+            google.maps.event.addListener(map, 'click', function(event){
+                if (counter > 2) {
+                    alert("Only two locations!");
+                } 
+                else {
+                    if (counter == 1) {
+                        pt1.setMap(map);
+                        pt1.setPosition(event.latLng);
+                    }
+                       
+                    if (counter == 2){
+                        pt2.setMap(map);
+                        pt2.setPosition(event.latLng);
+                    }
+                        
+                    counter++;
+                }
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        $(document).ready(function(){
+            //create database of the streets
+            $.ajax({
+                url: 'php/db.php'
+            });
+        });
+
+        $('#btn').click(function(){
+            $.ajax({
+                url:'php/ds.php',
+                type:'post',
+                dataType:'html',
+                data:{
+                    lat1:pt1.getPosition().lat()+'', 
+                    lng1:pt1.getPosition().lng()+'',
+                    lat2:pt2.getPosition().lat()+'',
+                    lng2:pt2.getPosition().lng()+''
+                },
+                success:function(data){
+                    alert(data);
+                }
+            });
+        });
+    </script>
 </html>

@@ -4,15 +4,10 @@
 	$con = mysql_connect("localhost", "root", "");
 	if(mysql_errno())
 		echo "error";
-	
-	if (isset($_POST['dbname'])) {
-		$dbname = $_POST['dbname'];
-	} else
-		$dbname = 'dmetprojdb';
 
 	//create database if it doesn't exist
-	if(mysql_query("CREATE DATABASE " . $dbname)){
-		mysql_select_db($dbname, $con);
+	if(mysql_query("CREATE DATABASE dmetprojdb")){
+		mysql_select_db('dmetprojdb', $con);
 
 		//create tables
 		mysql_query("
@@ -85,13 +80,36 @@
 				(10, 11, 'Nasr Road'),
 				(10, 23, 'Hassan El Maamoon'),
 				(11, 12, 'Nasr Road'),
-				(11, 22, 'Makram Abed')
+				(11, 22, 'Makram Abed'),
+				(12, 13, 'Nasr Road'),
+				(13, 14, 'Nasr Road'),
+				(13, 21, 'Abbas EL Akkad'),
+				(14, 15, 'Nasr Road'),
+				(14, 20, 'EL Tayaraan'),
+				(15, 16, 'Nasr Road'),
+				(15, 19, 'Yussef Abbas'),
+				(16, 17, 'El Mokhaym El Daem'),
+				(17, 18, 'Ali Amin'),
+				(18, 19, 'Ali Amin'),
+				(18, 28, 'El Khalyfa EL Zahar'),
+				(19, 20, 'Ali Amin'),
+				(20, 21, 'Ali Amin'),
+				(21, 22, 'Mostafa El Nahaas'),
+				(21, 27, 'Abbas El Akkad'),
+				(22, 23, 'Mostafa El Nahaas'),
+				(23, 24, 'Mostafa EL Nahaas'),
+				(23, 26, 'Hassan El Shrief'),
+				(24, 25, 'Mahdy Arafa'),
+				(25, 26, 'Ahmed EL Zomor'),
+				(26, 27, 'Ahmed El Zomor'),
+				(26, 29, 'El Waffaa w El Amaal'),
+				(27, 28, 'Zaker Hassen')
 
 		");
 	}
 	//UNCOMMENT THIS
-	//else
-		//echo 'error';	
+	else
+		echo 'error';	
 
 	
 	mysql_close($con);

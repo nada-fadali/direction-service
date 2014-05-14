@@ -25,8 +25,8 @@
 //use Doctrine\OrientDB\Exception;
 //use Doctrine\OrientDB\LogicException;
 
-require_once 'Graph/Vertex.php';
-require_once 'Graph/Graph.php';
+require_once 'Vertex.php';
+require_once 'Graph.php';
 
 class Dijkstra 
 {
