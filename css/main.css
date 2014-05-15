@@ -77,14 +77,15 @@ a:hover{
 	margin-left: 10px;
 	font-weight: normal;
 	text-decoration: none;
-	padding:3px;
-	border-radius: 0px;
+	padding:9px 3px 3px 13px;
+	border-top-left-radius: 25px;
 }
 #nav a:hover{
 	background-color: #8DC2A1;
 	color: #FEFEFE;
 	text-decoration: underline;
-	border-radius: 7px;
+	border-top-left-radius: 5px;
+
 }
 
 #container{
@@ -92,4 +93,32 @@ a:hover{
 	background-color: #FEFEFE;
 	padding: 80px 7px 50px 7px;
 	margin: -60px 0 0 20%;
+}
+
+#credit{
+	position: fixed;
+	bottom: -7px;
+	right: 0;
+	background-color: #8DC2A1;
+	width: 50px;
+	height:20px;
+	text-align: center;
+	color:#EFEFEF;
+	padding-top:10px;
+	padding-bottom: 7px;
+	border-top-left-radius: 25px;
+	-moz-transition:all ease-in-out 0.5s;
+    -webkit-transition:all ease-in-out 0.5s;
+    -o-transition:all ease-in-out 0.5s;
+    transition:all ease-in-out 0.5s;
+}
+
+#credit:hover{
+	bottom: 0px;
+	width:150px;
+	height:30px;
+	-moz-transition:all ease-in-out 0.5s;
+    -webkit-transition:all ease-in-out 0.5s;
+    -o-transition:all ease-in-out 0.5s;
+    transition:all ease-in-out 0.5s;	
 }

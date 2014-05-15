@@ -1,7 +1,5 @@
 <?php
 	
-
-
 	//calculates distance between two points
 	function distance($lat1, $lon1, $lat2, $lon2) {
 		$theta = $lon1 - $lon2;
@@ -14,6 +12,24 @@
 		return ($miles * 1.609344);
 	}
 
+	$lat1 = $_POST['lat1'];
+	$lng1 = $_POST['lng1'];
+	$lat2 = $_POST['lat2'];
+	$lng2 = $_POST['lng2'];
+
+	$con = mysql_connect("localhost", "root", "");
+	if(mysql_errno())
+		echo "error connection to localhost";
+	else {
+		mysql_select_db("dmetprojdb", $con); //CLOSE THIS AND DELETE COMMENT
+
+		
+
+
+	}
+
+
+
 	//create graph
 	require_once 'Graph/Graph.php';
 	require_once 'Graph/Vertex.php';
@@ -24,7 +40,6 @@
 	//since all streets are two ways
 	//because -you know, because Egypt om el donia~
 	$graph = new Graph();
+	
 
-	//initialize graph from db
-	//get query from db and create the nodes and the edges
 ?>

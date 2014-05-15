@@ -81,15 +81,17 @@
 			<div id="map"></div>
 
             <div style="float:right;">
-                <input id="btnClearPt1" type="button" value="Clear Point 1" 
+                <input id="btnClearPt1" type="button" value="Clear red Point" 
                 onclick="clearPt(1);" style="font-size:11px;" >
 
-                <input id="btnCLearpt2" type="button" value="Clear Point 2" 
+                <input id="btnCLearpt2" type="button" value="Clear blue Point" 
                 onclick="clearPt(0);" style="font-size:11px;">
             </div>
 
             <input id="btn" type="button" value="Show Directions">
 		</div>
+
+        <div id="credit">NF<br>Theme by:Nada Fadali</div>
 	</body>	
 
 
@@ -165,7 +167,7 @@
                 $.ajax({
                     url:'php/ds.php',
                     type:'post',
-                    dataType:'html',
+                    //dataType:'html',
                     data:{
                         lat1:pt1.getPosition().lat()+'', 
                         lng1:pt1.getPosition().lng()+'',
