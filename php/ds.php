@@ -12,6 +12,7 @@
 		$dist = rad2deg($dist);
 		$miles = $dist * 60 * 1.1515;
 
+		//return ($miles * 1.609344);
 		return ($miles * 1.609344);
 	}
 
@@ -83,8 +84,22 @@
 		} //end if there isn't session variables
 
 		
-		//round user input to the nearst nodes
+		/*
+		*	round user input to the nearst nodes
+		*/
+		//	array of lat arranged asec
+		for ($i=1; $i <= count($_SESSION['node']); $i++) { 
+			$latOrder[$i] = $_SESSION['node'][$i][1];
+		}
+		sort($latOrder);
+
+		// 	array of lng arranged asec
+		for ($i=1; $i <= count($_SESSION['node']); $i++) { 
+			$lngOrder[$i] = $_SESSION['node'][$i][1];
+		}
+		sort($lngOrder);
 		
+
 		//calculate shortest path
 		$path = new Dijkstra($_SESSION['graph']);
 		$path->setStartingVertex();
