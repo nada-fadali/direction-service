@@ -48,7 +48,7 @@
                 Hello, my name is <b>Nada</b> and this is my project for DMET601 Web Technologies and Utitlties course at the German University in Cairo. It's a direction service that shows on the map the shortest driving route between two streets.
             </p>
             <p>
-                Bellow is a <a href="main_page.html#map">map</a>centered on <b>Nasr City</b>. You may click on the two streets you wish to view the shortest driving route between them (two streets must be from the list of the available streets).
+                Bellow is a <a href="main_page.html#map">map</a>centered on <b>Nasr City</b>. You may click on the two streets you wish to view the shortest driving route between them (two streets must be from the list of the available streets) -technically, stay inside the circle.
             </p>
             <p>
                 &nabla; The streets available are
@@ -76,7 +76,7 @@
                 </ul>
             </p>
 
-            <p>&nabla; Please Click on the two locations</p>
+            <p>&nabla; Please Click on the two locations &laquo;Remeber! inside the cirle&raquo;</p>
 			
 			<div id="map"></div>
 
@@ -141,6 +141,20 @@
                         pt2.setPosition(event.latLng);
                     } 
                 }
+            });
+
+            /*
+            *   Border Circle
+            */
+            new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.3,
+                strokeWeight: 2,
+                fillColor: '#FFFFF00',
+                fillOpacity: 0.05,
+                map: map,
+                center: new google.maps.LatLng(30.057543,31.335868),
+                radius: Math.sqrt(1900) * 100
             });
         }
 
