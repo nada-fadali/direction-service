@@ -1,0 +1,27 @@
+<?php
+	##########################################
+	##	calculates distance between two points
+	##########################################
+
+	function distance($lat1, $lon1, $lat2, $lon2) {
+		$theta = $lon1 - $lon2;
+	  	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+		$dist = acos($dist);
+		$dist = rad2deg($dist);
+		$miles = $dist * 60 * 1.1515;
+
+		//return ($miles * 1.609344);
+		return ($miles * 1.609344);
+	}
+
+	###############################
+	##	Search by value in 2D array
+	#	returns index
+	###############################
+	function array_search2d($needle, $haystack) {
+	    for ($i = 1; $i <= count($haystack); ++$i) {
+	        if (in_array($needle, $haystack[$i])) return $i;
+	    }
+	    return false;
+	}
+?>

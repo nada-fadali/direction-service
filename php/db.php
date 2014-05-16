@@ -108,10 +108,8 @@
 
 			');
 		}
-		//UNCOMMENT THIS
-		//database already exist error
-		else
-			echo "error";	
+		//else
+			//echo "Error creating database. Name Already Exists!";	
 
 		
 		mysql_close($con);

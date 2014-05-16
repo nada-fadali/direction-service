@@ -50,6 +50,7 @@
             <p>
                 Bellow is a <a href="main_page.html#map">map</a>centered on <b>Nasr City</b>. You may click on the two streets you wish to view the shortest driving route between them (two streets must be from the list of the available streets).
             </p>
+            <br>
             <p>
                 &nabla; The streets available are
                 <ul>
@@ -75,7 +76,7 @@
                     <li>El Waffaa w EL Amaal</li>
                 </ul>
             </p>
-
+            <br>
             <p>&nabla; Please Click on the two locations</p>
 			
 			<div id="map"></div>
@@ -148,7 +149,13 @@
             */
             $(document).ready(function(){
                 $.ajax({
-                    url: 'php/db.php'
+                    url: 'php/db.php',
+                    success:function(data){
+                        //user isn't suppose to see this alert
+                        //this is just to show that the database I'm trying to create already exists
+                        //and so needed to be changed in the code
+                        //alert(data);
+                    }
                 });
             });
 

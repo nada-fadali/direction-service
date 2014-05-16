@@ -1,29 +1,25 @@
 <?php
 	
 	session_start();
-	
+
+	require_once 'Graph/Graph.php';
+	require_once 'Graph/Vertex.php';
+	require_once 'Graph/Dijkstra.php';
+	require_once 'fns.php';
+
+	####################
+	##	Start of script
+	####################
+
+
 	/*
-	*	calculates distance between two points
+	*	Initialize graph one time only
 	*/
-	function distance($lat1, $lon1, $lat2, $lon2) {
-		$theta = $lon1 - $lon2;
-	  	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-		$dist = acos($dist);
-		$dist = rad2deg($dist);
-		$miles = $dist * 60 * 1.1515;
-
-		//return ($miles * 1.609344);
-		return ($miles * 1.609344);
-	}
-
-	$con = mysql_connect("localhost", "root", "");
-	if(mysql_errno())
-		echo "error connection to localhost";
-	else {
-		/*
-		*	Initialize graph one time only
-		*/
-		if (!isset($_SESSION['graph']) || !isset($_SESSION['link']) || !isset($_SESSION['node'])) {
+	if (!isset($_SESSION['graph']) || !isset($_SESSION['link']) || !isset($_SESSION['node'])) {
+		$con = mysql_connect("localhost", "root", "");
+		if(mysql_errno())
+			echo "error connection to localhost";
+		else {
 			mysql_select_db("dmetprojdb", $con); //CLOSE THIS AND DELETE COMMENT
 
 			//get nodes
@@ -43,12 +39,6 @@
 			}
 			
 			mysql_close($con);
-
-
-			//create graph
-			require_once 'Graph/Graph.php';
-			require_once 'Graph/Vertex.php';
-			require_once 'Graph/Dijkstra.php';
 
 			//This graph is undirected
 			//but weighted
@@ -80,30 +70,45 @@
 			for ($i=1; $i < count($v); $i++) { 
 				$_SESSION['graph']->add($v[$i]);
 			}
-
+			}
+			
 		} //end if there isn't session variables
 
 		
 		/*
 		*	round user input to the nearst nodes
 		*/
-		//	array of lat arranged asec
-		for ($i=1; $i <= count($_SESSION['node']); $i++) { 
-			$latOrder[$i] = $_SESSION['node'][$i][1];
-		}
-		sort($latOrder);
+		$ref= array($_POST['lat1'], $_POST['lng1']);
+		$distances = array_map(function($item) use($ref) {
+		    $a = array_slice($item, -2);
+		    return distance($a[0], $a[1], $ref[1], $ref[0]);
+		}, $_SESSION['node']);
 
-		// 	array of lng arranged asec
-		for ($i=1; $i <= count($_SESSION['node']); $i++) { 
-			$lngOrder[$i] = $_SESSION['node'][$i][1];
-		}
-		sort($lngOrder);
+		asort($distances);
+		//$n1 = array($_SESSION['node'][key($distances)][1], $_SESSION['node'][key($distances)][0]);
+
+		//	Index of first node
+		$key1 = array_search2d($_SESSION['node'][key($distances)][1], $_SESSION['node']);
+
+
+		$ref= array($_POST['lat2'], $_POST['lng2']);
+		$distances = array_map(function($item) use($ref) {
+		    $a = array_slice($item, -2);
+		    return distance($a[0], $a[1], $ref[1], $ref[0]);
+		}, $_SESSION['node']);
+
+		asort($distances);
+		//$n2 = array($_SESSION['node'][key($distances)][1], $_SESSION['node'][key($distances)][0]);
+
+		//	Index of second node
+		$key2 = array_search2d($_SESSION['node'][key($distances)][1], $_SESSION['node']);
+
 		
-
 		//calculate shortest path
 		$path = new Dijkstra($_SESSION['graph']);
-		$path->setStartingVertex();
-		$path->setEndingVertex();
+		$algorithm = new Dijkstra($_SESSION['graph']);
+		$algorithm->setStartingVertex($_SESSION['graph']->getVertex($key1));
+		$algorithm->setEndingVertex($_SESSION['graph']->getVertex($key2));
 
 
 	}
