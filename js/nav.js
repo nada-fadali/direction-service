@@ -14,12 +14,21 @@ $(function() {
                 width: nav.width()
             });
             isFixed = true;
+
+            $('#nav a').css({
+                "border": "none"
+            });
         }
         else if (!shouldBeFixed && isFixed)
         {
             nav.css({
                 position: 'static'
             });
+
+            $('#nav a').css({
+                "border-right": "5px solid #AFE4C3"
+            });
+            
             isFixed = false;
         }
     });

@@ -36,9 +36,9 @@
 		<div id="header">
 			<div id="t">and you shall have directions</div><br>
 			<div id="nav">
-				|<a href="main_page.html" class="smoothScroll">home</a>
-				|<a href="about.html#t" class="smoothScroll">about</a>
-				|<a href="main_page.html#map" class="smoothScroll">map</a> |
+				|<a href="main_page.html">home</a>
+				|<a href="about.html#t">about</a>
+				|<a href="main_page.html#map">map</a> |
 			</div>
 		</div>
 
@@ -143,44 +143,46 @@
                 }
             });
 
+            /*
+            * create database of the nodes
+            */
+            $(document).ready(function(){
+                $.ajax({
+                    url: 'php/db.php'
+                });
+            });
+
+            /*
+            *   click event
+            *   takes input points and return shortest path
+            */
+            $('#btn').click(function(){
+                if (f1 || f2) {
+                    alert("Please Choose two locations!")
+                }  
+                else{ 
+                    $.ajax({
+                        url:'php/ds.php',
+                        type:'post',
+                        //dataType:'html',
+                        data:{
+                            lat1:pt1.getPosition().lat()+'', 
+                            lng1:pt1.getPosition().lng()+'',
+                            lat2:pt2.getPosition().lat()+'',
+                            lng2:pt2.getPosition().lng()+''
+                        },
+                        success:function(data){
+                            //alert(data);
+                        }
+                    });
+                }
+            });
+
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
         
-        /*
-        * create database of the nodes
-        */
-        $(document).ready(function(){
-            $.ajax({
-                url: 'php/db.php'
-            });
-        });
-
-        /*
-        *   click event
-        *   takes input points and return shortest path
-        */
-        $('#btn').click(function(){
-            if (f1 || f2) {
-                alert("Please Choose two locations!")
-            }  
-            else{ 
-                $.ajax({
-                    url:'php/ds.php',
-                    type:'post',
-                    //dataType:'html',
-                    data:{
-                        lat1:pt1.getPosition().lat()+'', 
-                        lng1:pt1.getPosition().lng()+'',
-                        lat2:pt2.getPosition().lat()+'',
-                        lng2:pt2.getPosition().lng()+''
-                    },
-                    success:function(data){
-                        alert(data);
-                    }
-                });
-            }
-        });
+        
         
         /*
         * Clear points on the map
