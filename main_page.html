@@ -181,7 +181,7 @@
                             lng2:pt2.getPosition().lng()+''
                         },
                         success:function(data){
-                            //alert(data);
+                            alert(data);
 
                             /*
                             *   Render Path
@@ -189,12 +189,11 @@
                             var nc = [
                                 new google.maps.LatLng(pt1.getPosition().lat(), pt1.getPosition().lng())
                             ];
-                            
+
                             var s = data.split(" "); 
                             for (var i = 0; i < s.length-1; i+=2) {
                                 var lat = parseFloat(s[i]);
                                 var lng = parseFloat(s[i+1]);
-                                //  node markers
                                 var n = new google.maps.Marker({
                                     map: map,
                                     position: new google.maps.LatLng(lng, lat),
@@ -208,8 +207,9 @@
                                 new google.maps.LatLng(pt2.getPosition().lat(), pt2.getPosition().lng())
                             );
 
-                            //  path line
-                            new google.maps.Polyline({
+                                              
+
+                            var path = new google.maps.Polyline({
                                 path: nc,
                                 map: map,
                                 strokeColor: '#4F6B5A',

@@ -58,7 +58,7 @@ a:hover{
 	color: #EBFDD4;
 	text-align: center;
 	text-transform: uppercase;
-	padding-top: 180px;
+	padding-top: 140px;
 }
 
 #nav{
@@ -67,6 +67,7 @@ a:hover{
 	font-size: 14px;
 	padding: 10px 23px 10px 0;
 	z-index: 9999;
+	border-bottom:4px solid #AFE4C3;
 	
 }
 
@@ -80,7 +81,7 @@ a:hover{
 	text-decoration: none;
 	padding:9px 3px 3px 13px;
 	border-top-left-radius: 20px;
-	border-right:5px solid #AFE4C3;
+	border-right:7px solid #AFE4C3;
 }
 #nav a:hover{
 	background-color: #8DC2A1;
