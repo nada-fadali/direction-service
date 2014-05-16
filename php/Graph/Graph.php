@@ -35,8 +35,8 @@ class Graph
     {
         if (array_key_exists($vertex->getId(), $this->getVertices())) {
             //throw new Exception
-		echo ('Unable to insert multiple Vertices with the same ID in a Graph');
-        }
+		echo ('EXCEPTION line 38 in Graph.php: Unable to insert multiple Vertices with the same ID in a Graph');
+        } else
 
         $this->vertices[$vertex->getId()] = $vertex;
 
@@ -50,8 +50,8 @@ class Graph
 
         if (!array_key_exists($id, $vertices)) {
             //throw new Exception
-		echo ("Unable to find $id in the Graph");
-        }
+		echo ("<b>EXCEPTION line 53 in Grap.php</b>: Unable to find $id in the Graph");
+        } else
 
         return $vertices[$id];
     }

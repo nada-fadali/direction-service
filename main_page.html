@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
         <style type="text/css">
             #map{
-                height: 500px; 
+                height: 420px; 
                 margin-bottom:20px;
             }
 
@@ -92,6 +92,7 @@
             <input id="btn" type="button" value="Show Directions">
 		</div>
 
+
         <div id="credit">NF<br>Theme by: Nada Fadali</div>
 	</body>	
 
@@ -106,6 +107,7 @@
         //flags to render markers
         var f1 = true;
         var f2 = true;
+
 
         //markers 
         var pt1 = new google.maps.Marker({title:'Point 1'});
@@ -180,6 +182,45 @@
                         },
                         success:function(data){
                             //alert(data);
+
+                            /*
+                            *   Render Path
+                            */
+                            var nc = [
+                                new google.maps.LatLng(pt1.getPosition().lat(), pt1.getPosition().lng())
+                            ];
+                            
+                            var s = data.split(" "); 
+                            for (var i = 0; i < s.length-1; i+=2) {
+                                var lat = parseFloat(s[i]);
+                                var lng = parseFloat(s[i+1]);
+                                //  node markers
+                                var n = new google.maps.Marker({
+                                    map: map,
+                                    position: new google.maps.LatLng(lng, lat),
+                                    icon: 'css/yellow-dot.png'
+                                });
+                                nc.push(
+                                    new google.maps.LatLng(n.getPosition().lat(), n.getPosition().lng())
+                                );
+                            };
+                            nc.push(
+                                new google.maps.LatLng(pt2.getPosition().lat(), pt2.getPosition().lng())
+                            );
+
+                            //  path line
+                            new google.maps.Polyline({
+                                path: nc,
+                                map: map,
+                                strokeColor: '#4F6B5A',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 4
+                            });
+
+
+                            /*
+                            *   Create Direction files
+                            */
                         }
                     });
                 }
