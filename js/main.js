@@ -176,10 +176,10 @@ function initialize() {
             $.ajax({
                 url:'php/dw.php',
                 data:{dw:dw, type:'xml'},
-                type:'post',
-                success:function(data){
-                    //alert(data);
-                }
+                type:'post'
+            })
+            .complete(function(){
+                window.open('php/filedownloader.php?download_file=direction.xml');
             });
         });
 

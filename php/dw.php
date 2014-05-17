@@ -26,7 +26,21 @@
 		//download xml file
 		else
 		{
+			if (file_exists($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads")) 
+				$fh = fopen($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads/direction.xml", "w");
+			else
+				$fh = fopen("direction.JSON", "w");	
 
+			$data = "<directions>" . "\n" . "<direction>";
+			for ($i=0; $i < count($dw)-1; $i++) {
+				$data .= '<direction>' . "\n" .$dw[$i][1]. "\n" . "</direction>" . "\n"
+					. "<distance>" . "\n" . $dw[$i][3] . "\n" . "</distance>" . "\n" . "</direction>" . "\n\n";
+			}
+			$data .= "</directions>";
+
+
+			fwrite($fh, $data);
+			fclose($fh);
 		}
 	}
 	else
