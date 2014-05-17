@@ -8,10 +8,7 @@
 
 		//	download json file
 		if ($_POST['type'] == 'json') {
-			if (file_exists($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads")) 
-				$fh = fopen($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads/direction.JSON", "w");
-			else
-				$fh = fopen("direction.JSON", "w");
+			$fh = fopen("direction.JSON", "w");
 
 			$data = '{' . "\n" . '	"directions": ' .'['. "\n";
 			for ($i=0; $i < count($dw)-1; $i++) { 
@@ -26,10 +23,7 @@
 		//download xml file
 		else
 		{
-			if (file_exists($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads")) 
-				$fh = fopen($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads/direction.xml", "w");
-			else
-				$fh = fopen("direction.xml", "w");	
+			$fh = fopen("direction.xml", "w");	
 
 			$data = "<instructions>" . "\n\n";
 			for ($i=0; $i < count($dw)-1; $i++) {

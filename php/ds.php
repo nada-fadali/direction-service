@@ -128,7 +128,7 @@
 	//	return the nodes along this path
 	$nn = split("-", $algorithm->getLiteralShortestPath());
 
-	#var_dump($nn);echo "<br>";
+	var_dump($nn);#echo "<br>";
 	#echo $algorithm->getDistance();
 
 	//	return value to the client side
