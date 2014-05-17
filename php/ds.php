@@ -189,7 +189,7 @@
 
 
 	//	return the final result
-	echo $res .= $tmp;
+	echo $res .= $tmp . "|" . $algorithm->getDistance();
 
 	//	free variables for memory usage sake
 	$algorithm = null; unset($algorithm);

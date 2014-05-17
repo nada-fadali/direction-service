@@ -120,7 +120,7 @@ function initialize() {
                     }
 
                             
-                    for(i++; i < s.length; i++){
+                    for(i++; i < s.length-1; i++){
                         direction+= "<li>" + s[i] + "</li>";
                         dw += s[i] + "|";
                     }
@@ -138,7 +138,8 @@ function initialize() {
                     /*
                     *   Render Directions
                     */
-                    $('#c').html(direction+"</ul>");
+                    $('#c').html(direction+"</ul>" + "<i><big>&nabla; Total Driving Distance</big></i><ul>" 
+                        + "<big><li>" + s[s.length-1] + "KM</li></big></ul>");
                         
                 }//end of success function
             });//end of ajax
