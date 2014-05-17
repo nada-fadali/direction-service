@@ -91,6 +91,13 @@
 
             <input id="btn" type="button" value="Show Directions"><br><br>
             <div id="c"></div>
+            <input id="btnReload" type="button" value="Go Again" style="display:none">
+
+            <div id="dw" style="display:none"><br><br>
+                &nabla;You can also download directions:<br><br>
+                <input id="btnjson" type="button" value="Download .JSON">
+                <input id="btnxml" type="button" value="Download .xml">
+            </div>
 		</div>
 
 
@@ -183,7 +190,17 @@
                         },
                         success:function(data){
                             //alert(data);
-                            //$('#c').html(data);
+                            
+                            /*
+                            *   Hide/Show direction service buttons
+                            */
+                            $('#btn').hide(300);
+                            $('#btnClearPt1').hide(300);
+                            $('#btnCLearpt2').hide(300);
+                            
+                            $('#btnReload').show(300);
+                            $('#dw').show(300);
+
                             /*
                             *   Render Path
                             */
@@ -191,23 +208,29 @@
                                 new google.maps.LatLng(pt1.getPosition().lat(), pt1.getPosition().lng())
                             ];
 
-                            var s = data.split(" "); 
-                            for (var i = 0; i < s.length-1; i+=2) {
-                                var lat = parseFloat(s[i]);
-                                var lng = parseFloat(s[i+1]);
-                                var n = new google.maps.Marker({
-                                    map: map,
-                                    position: new google.maps.LatLng(lat, lng),
-                                    icon: 'css/yellow-dot.png'
-                                });
-                                nc.push(
-                                    new google.maps.LatLng(n.getPosition().lat(), n.getPosition().lng())
-                                );
-                            };
-                            nc.push(
-                                new google.maps.LatLng(pt2.getPosition().lat(), pt2.getPosition().lng())
-                            );                
+                            var s = data.split("|"); 
+                            var direction = "<i><big>&nabla; Directions</big></i><ul style='list-style: square; font-size:14px;'>";
+                            //alert(s.length);
+                            var i;
+                            for (i = 0; i < s.length-1; i+=2) {
+                                if (s[i].indexOf("Go") == -1 && s[i+1].indexOf("Go") == -1) {
+                                    var lat = parseFloat(s[i]);
+                                    var lng = parseFloat(s[i+1]);
+                                    var n = new google.maps.Marker({
+                                        map: map,
+                                        position: new google.maps.LatLng(lat, lng),
+                                        icon: 'css/yellow-dot.png'
+                                    });
+                                    nc.push(new google.maps.LatLng(n.getPosition().lat(), n.getPosition().lng()));
+                                } 
+                                else
+                                    break;                                    
+                            }
 
+                            for(i++; i < s.length; i++)
+                                direction+= "<li>" + s[i] + "</li>";
+
+                            nc.push(new google.maps.LatLng(pt2.getPosition().lat(), pt2.getPosition().lng()));                
                             var path = new google.maps.Polyline({
                                 path: nc,
                                 map: map,
@@ -216,16 +239,22 @@
                                 strokeWeight: 4
                             });
 
-
                             /*
-                            *   Create Direction files
+                            *   Render Directions
                             */
-                            $.ajax({
-
-                            });
+                            $('#c').html(direction+"</ul>");
+                           
                         }
                     });
                 }
+            });
+
+            /*
+            *   Go Again button
+            */
+            $('#btnReload').click(function(){
+                location = "#map";
+                location.reload(true);
             });
 
         }

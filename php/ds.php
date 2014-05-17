@@ -3,7 +3,9 @@
 	require_once 'Graph/Graph.php';
 	require_once 'Graph/Vertex.php';
 	require_once 'Graph/Dijkstra.php';
-	require_once 'fns.php';
+	require_once 'Functions/search.php';
+	require_once 'Functions/distance.php';
+	require_once 'Functions/bearing.php';
 
 	//session_start(); 
 
@@ -126,13 +128,70 @@
 	//	return the nodes along this path
 	$nn = split("-", $algorithm->getLiteralShortestPath());
 
-	//var_dump($nn);echo "<br>";
+	#var_dump($nn);echo "<br>";
 	#echo $algorithm->getDistance();
 
-	for ($i=0; $i < count($nn); $i++) { 
-		echo $node[intval($nn[$i])][0] . " " . $node[intval($nn[$i])][1]. " ";
+	//	return value to the client side
+	$res = "";
+
+	// get directions from first node
+	$s = array(
+		'lat' => floatval($_POST['lat1']),
+		'lng' => floatval( $_POST['lng1'])
+	);
+	$d = array(
+		'lat' => floatval($node[intval($nn[0])][0]),
+		'lng' => floatval($node[intval($nn[0])][1])
+	);
+	$direction = getDirection(getBearing($s, $d));
+	$distance = intval(distance($s['lat'], $s['lng'], $d['lat'], $d['lng']) * 1000);
+	$tmp = "|Go $direction for $distance M";
+
+	for ($i=0; $i < count($nn)-1; $i+=2) { 
+		// get nodes
+		$lat1 = $node[intval($nn[$i])][0];
+		$lng1 = $node[intval($nn[$i])][1];
+		$lat2 = $node[intval($nn[$i+1])][0];
+		$lng2 = $node[intval($nn[$i+1])][1];
+
+		$res .=  $lat1 . "|" . $lng1 . "|" . $lat2 . "|" . $lng2 . "|";
+
+		// get directions
+		$s = array(
+			'lat' => floatval($lat1),
+			'lng' => floatval($lng1)
+		);
+		$d = array(
+			'lat' => floatval($lat2),
+			'lng' => floatval($lng2)
+		);
+
+		$direction = getDirection(getBearing($s, $d));
+		$distance = intval(distance(floatval($lat1), floatval($lng1), floatval($lat2), floatval($lng2))*1000);
+		$tmp .= "|". "Go $direction for $distance M";
+
 	}
 
+	// get direction to last node
+	$s = array(
+		'lat' => floatval($node[intval($nn[count($nn)-1])][0]),
+		'lng' => floatval($node[intval($nn[count($nn)-1])][1])
+	);
+	$d = array(
+		'lat' => floatval($_POST['lat2']),
+		'lng' => floatval($_POST['lng2'])
+	);
+	$direction = getDirection(getBearing($s, $d));
+	$distance = intval(distance($s['lat'], $s['lng'], $d['lat'], $d['lng'])*1000);
+	$tmp .=  "|Go $direction for $distance M";
+
+
+
+
+	//	return the final result
+	echo $res .= $tmp;
+
+	//	free variables for memory usage sake
 	$algorithm = null; unset($algorithm);
     $node = null; unset($node);
     $link = null; unset($link);
@@ -142,6 +201,17 @@
     $ref = null; unset($ref);
     $distances = null; unset($distances);
     $v = null; unset($v);
-
+    $res = null; unset($res);
+    $tmp = null; unset($tmp);
+    $lat1 = null; unset($lat1);
+    $lng1 = null; unset($lng2);
+    $lat2 = null; unset($lat2);
+    $lng2 = null; unset($lng2);
+    $s = null; unset($s);
+    $d = null; unset($d);
+    $direction = null; unset($direction);
+    $distance = null; unset($distance);
+    $tmp = null; unset($tmp);
+    $res = null; unset($res);
 
 ?>
