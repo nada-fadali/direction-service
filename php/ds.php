@@ -183,6 +183,7 @@
 	);
 	$direction = getDirection(getBearing($s, $d));
 	$distance = intval(distance($s['lat'], $s['lng'], $d['lat'], $d['lng'])*1000);
+	
 	$tmp .=  "|Go $direction for $distance M";
 
 

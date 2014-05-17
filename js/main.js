@@ -138,7 +138,8 @@ function initialize() {
                     /*
                     *   Render Directions
                     */
-                    $('#c').html(direction+"</ul>" + "<i><big>&nabla; Total Driving Distance</big></i><ul>" 
+                    $('#c').html("Note: if two instruction have the same direction then go straight.<br><br>" + direction+ 
+                        "</ul>" + "<i><big>&nabla; Total Driving Distance</big></i><ul>" 
                         + "<big><li>" + s[s.length-1] + "KM</li></big></ul>");
                         
                 }//end of success function
