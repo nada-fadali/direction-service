@@ -25,8 +25,8 @@
 //use Doctrine\OrientDB\Exception;
 //use Doctrine\OrientDB\LogicException;
 
-require_once 'Vertex.php';
-require_once 'Graph.php';
+require_once 'Graph/Vertex.php';
+require_once 'Graph/Graph.php';
 
 class Dijkstra 
 {
@@ -98,14 +98,17 @@ class Dijkstra
     public function getShortestPath()
     {
         $path   = array();
-        $vertex = $this->getEndingVertex();
+        $vertex = $this->getEndingVertex()->getId();
 
-        while ($vertex->getId() != $this->getStartingVertex()->getId()) {
+        while ($vertex != $this->getStartingVertex()->getId()) {
+            
             $path[] = $vertex;
-            $vertex = $vertex->getPotentialFrom();
+
+            //var_dump($this->getGraph()->getVertex($vertex));
+            $vertex = $this->getGraph()->getVertex($vertex)->getPotentialFrom()->getId();
         }
 
-        $path[] = $this->getStartingVertex();
+        $path[] = $this->getStartingVertex()->getId();
 
         return array_reverse($path);
     }

@@ -89,7 +89,8 @@
                 onclick="clearPt(0);" style="font-size:11px;">
             </div>
 
-            <input id="btn" type="button" value="Show Directions">
+            <input id="btn" type="button" value="Show Directions"><br><br>
+            <div id="c"></div>
 		</div>
 
 
@@ -181,8 +182,8 @@
                             lng2:pt2.getPosition().lng()+''
                         },
                         success:function(data){
-                            alert(data);
-
+                            //alert(data);
+                            //$('#c').html(data);
                             /*
                             *   Render Path
                             */
@@ -196,7 +197,7 @@
                                 var lng = parseFloat(s[i+1]);
                                 var n = new google.maps.Marker({
                                     map: map,
-                                    position: new google.maps.LatLng(lng, lat),
+                                    position: new google.maps.LatLng(lat, lng),
                                     icon: 'css/yellow-dot.png'
                                 });
                                 nc.push(
@@ -205,9 +206,7 @@
                             };
                             nc.push(
                                 new google.maps.LatLng(pt2.getPosition().lat(), pt2.getPosition().lng())
-                            );
-
-                                              
+                            );                
 
                             var path = new google.maps.Polyline({
                                 path: nc,
@@ -221,6 +220,9 @@
                             /*
                             *   Create Direction files
                             */
+                            $.ajax({
+
+                            });
                         }
                     });
                 }
