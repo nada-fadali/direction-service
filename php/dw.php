@@ -13,11 +13,11 @@
 			else
 				$fh = fopen("direction.JSON", "w");
 
-			$data = '{"directions": ['. "\n";
+			$data = '{' . "\n" . '	"directions": ' .'['. "\n";
 			for ($i=0; $i < count($dw)-1; $i++) { 
-				$data .= '{"direction" : "'.$dw[$i][1].'", "distance" : "'.$dw[$i][3].'"}' . "\n";
+				$data .= '		{ "direction" : "'.$dw[$i][1].'" , "distance" : "'.$dw[$i][3].'" }' . "\n";
 			}
-			$data.= "]" . "\n" . "}";
+			$data.= "	]" . "\n" . "}";
 
 			fwrite($fh, $data);
 			fclose($fh);
@@ -29,14 +29,16 @@
 			if (file_exists($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads")) 
 				$fh = fopen($_SERVER['DOCUMENT_ROOT']. "/web-project/downloads/direction.xml", "w");
 			else
-				$fh = fopen("direction.JSON", "w");	
+				$fh = fopen("direction.xml", "w");	
 
-			$data = "<directions>" . "\n" . "<direction>";
+			$data = "<instructions>" . "\n\n";
 			for ($i=0; $i < count($dw)-1; $i++) {
-				$data .= '<direction>' . "\n" .$dw[$i][1]. "\n" . "</direction>" . "\n"
-					. "<distance>" . "\n" . $dw[$i][3] . "\n" . "</distance>" . "\n" . "</direction>" . "\n\n";
+				$data .= '	<instruction>' . "\n" . 
+						"		<direction>". "\n" . "			" . $dw[$i][1]. "\n" . "		</direction>" ."\n"
+						. "		<distance>" . "\n" . "			" . $dw[$i][3] . "\n" . "		</distance>" . "\n" 
+						. "	</instruction>" . "\n\n";
 			}
-			$data .= "</directions>";
+			$data .= "</instructions>";
 
 
 			fwrite($fh, $data);
