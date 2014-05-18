@@ -1,9 +1,0 @@
-{
-	"directions": [
-		{ "direction" : "north" , "distance" : "for" }
-		{ "direction" : "east" , "distance" : "1086" }
-		{ "direction" : "east" , "distance" : "548" }
-		{ "direction" : "east" , "distance" : "1085" }
-		{ "direction" : "south" , "distance" : "for" }
-	]
-}
