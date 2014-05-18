@@ -38,8 +38,8 @@
 	###################
 	function getDirection( $bearing )
 	{
-	  static $cardinals = array( 'north', 'north west', 'west', 'south west', 
-	  		'south', 'south east', 'east', 'north east', 'north' );
+	  static $cardinals = array( 'north', 'northwest', 'west', 'southwest', 
+	  		'south', 'southeast', 'east', 'northeast', 'north' );
 	  return $cardinals[round( $bearing / 45 )];
 	}
 ?>
